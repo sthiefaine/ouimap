@@ -78,5 +78,15 @@ body {
 }
 
 .mapboxgl-map {
-  height: 100dvh !important
+  height: 100dvh !important;
+}
+
+.imgMap {
+  height: 100dvh !important;
+}
+
+@media screen and (max-width: 768px) {
+  .imgMap {
+    height: 90dvh !important;
+  }
 }

@@ -27,7 +27,7 @@ export function MapPageClient({ initialPois }: MapPageClientProps) {
   }, [initialPois, setPoisData])
 
   return (
-    <div className="flex h-[calc(100vh-4rem)]">
+    <div className="flex h-full">
       <div className="relative flex-1">
         <MapDisplay />
         <MapControls />
