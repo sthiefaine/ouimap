@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import Map, { MapRef, Marker } from "react-map-gl";
+import Map, { Layer, MapRef, Marker, Source } from "react-map-gl";
 import mapboxgl from "mapbox-gl";
 import Image from "next/image";
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { useShallow } from "zustand/shallow";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { PointPoiType } from "@/app/api/pois/data";
+import { getRoute } from "@/app/actions/route";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_GL_TOKEN;
 
@@ -23,6 +24,8 @@ export function MapDisplay() {
     setMapCoordinates,
     setMapZoom,
     optionZoom,
+    route,
+    setRoute,
   } = useGeneralSelectorStore(
     useShallow((state) => ({
       mapCoordinates: state.mapCoordinates,
@@ -30,6 +33,8 @@ export function MapDisplay() {
       setMapCoordinates: state.setMapCoordinates,
       setMapZoom: state.setMapZoom,
       optionZoom: state.optionZoom,
+      route: state.route,
+      setRoute: state.setRoute,
     }))
   );
 
@@ -79,22 +84,57 @@ export function MapDisplay() {
     setMapCoordinates([e.target._lngLat.lng, e.target._lngLat.lat]);
 
     // Wait for the map to move before displaying the popup
-    const handleMoveEnd = () => {
+    const handleMoveEnd = async () => {
       if (!mapRef.current || !popupRef.current) return;
       const currentZoom = mapRef.current.getZoom();
 
       if (currentZoom >= MAPBOX_MIN_ZOOM_DISPLAY_POPUP) {
-        const popup = `
-            <div>
-              <h3 class="font-bold">${poi.name}</h3>
-              <p>ID: ${poi.id}</p>
-            </div>
-          `;
+        // Générer le contenu HTML du popup
+        const popupContent = document.createElement("div");
 
+        // Titre et description
+        const title = document.createElement("h3");
+        title.className = "font-bold";
+        title.textContent = poi.name;
+
+        const description = document.createElement("p");
+        description.textContent = `${poi.address}`;
+
+        const button = document.createElement("button");
+        button.textContent = "Itineraire bureau";
+        button.className = "bg-blue-500 text-white px-3 py-1 rounded mt-2";
+
+        const bureau = poisData.find((p) => p.name === "Wemap Montpellier");
+        if (!bureau) return;
+
+        const routeData = await getRoute({
+          latitude: poi.coordinates.lat,
+          longitude: poi.coordinates.lng,
+        }, {
+          latitude: bureau.coordinates.lat,
+          longitude: bureau.coordinates.lng,
+        });
+
+        button.addEventListener("click", () => {
+          const route: GeoJSON.LineString = {
+            ...routeData
+          };
+          setRoute(route);
+        });
+
+        // Ajouter les éléments au contenu du popup
+        popupContent.appendChild(title);
+        popupContent.appendChild(description);
+
+        if(poi.id === "3") {
+          popupContent.appendChild(button);
+        }
+
+        // Ajouter le popup à la carte
         popupRef.current
           .setOffset(25)
           .setLngLat([poi.coordinates.lng, poi.coordinates.lat])
-          .setHTML(popup)
+          .setDOMContent(popupContent)
           .addTo(mapRef.current.getMap());
       }
 
@@ -112,21 +152,21 @@ export function MapDisplay() {
     <div>
       {!isMapLoaded && (
         <>
-        <Image
-          className="imgMap"
-          src="/mapTpl.png"
-          alt="Map Placeholder"
-          fill={true}
-          quality={100}
-          priority={true}
-          objectFit="cover"
-          style={{
-            position: "absolute",
-            zIndex: 0,
-            top: 0,
-            left: 0,
-          }}
-        />
+          <Image
+            className="imgMap"
+            src="/mapTpl.png"
+            alt="Map Placeholder"
+            fill={true}
+            quality={100}
+            priority={true}
+            objectFit="cover"
+            style={{
+              position: "absolute",
+              zIndex: 0,
+              top: 0,
+              left: 0,
+            }}
+          />
         </>
       )}
       <Map
@@ -141,20 +181,35 @@ export function MapDisplay() {
         onZoom={(e) => handleMapZoom(e)}
         mapboxAccessToken={MAPBOX_TOKEN}
         optimizeForTerrain={true}
-         onLoad={() => handleMapLoad()}
+        onLoad={() => handleMapLoad()}
         style={{
           opacity: isMapLoaded ? 1 : 0,
         }}
       >
-        {poisData?.length > 0 &&
-          poisData.map((poi) => (
-            <Marker
-              key={poi.id}
-              longitude={poi.coordinates.lng}
-              latitude={poi.coordinates.lat}
-              onClick={(e) => handleClickOnPoi(e, poi)}
-            />
-          ))}
+        <>
+          {poisData?.length > 0 &&
+            poisData.map((poi) => (
+              <Marker
+                key={poi.id}
+                longitude={poi.coordinates.lng}
+                latitude={poi.coordinates.lat}
+                onClick={(e) => handleClickOnPoi(e, poi)}
+              />
+            ))}
+
+          {route && (
+            <Source id="route" type="geojson" data={route}>
+              <Layer
+                id="route"
+                type="line"
+                paint={{
+                  "line-color": "#007cbf",
+                  "line-width": 4,
+                }}
+              />
+            </Source>
+          )}
+        </>
       </Map>
     </div>
   );

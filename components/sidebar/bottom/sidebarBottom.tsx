@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./sidebarBottom.module.css";
-import { Footprints, Minus } from "lucide-react";
+import { Eye, Minus } from "lucide-react";
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { useShallow } from "zustand/shallow";
 import { Button } from "@/components/ui/button";
@@ -82,7 +82,7 @@ export function SidebarBottom() {
             {poisData?.map((poi) => (
               <div
                 key={poi.id}
-                className={styles.poiCard + "min-w-[150px] h-[150px] bg-white/50 border-2 border-black/10 rounded-lg flex flex-col items-center justify-start"}
+                className={styles.poiCard + "min-w-[150px] h-[150px] bg-white/50 border-2 border-black/10 rounded-lg flex flex-col items-center justify-start p-1"}
               >
                 <div className="flex flex-grow flex-col items-start justify-start">
                   <h1 className="text-l font-bold">{poi.name}</h1>
@@ -90,7 +90,7 @@ export function SidebarBottom() {
                 </div>
 
                 <Button
-                    className="flex min-w-[120px] items-start justify-start gap-2 p-2"
+                    className="flex min-w-[120px] justify-start gap-2 p-2"
                     onClick={() =>
                       handleSetMapCoordinates([
                         poi.coordinates.lng,
@@ -98,7 +98,7 @@ export function SidebarBottom() {
                       ])
                     }
                   >
-                    <Footprints className="h-4 w-4 shrink-0" />
+                    <Eye className="h-4 w-4 shrink-0" />
                     Afficher
                   </Button>
               </div>

@@ -65,7 +65,7 @@ export function SidebarDetail() {
               <div className="flex flex-row flex-wrap gap-2">
                 <Button
                   variant="outline"
-                  className="flex min-w-[120px] items-start justify-start gap-2 p-2"
+                  className="flex min-w-[120px] justify-start gap-2 p-2"
                   title="Envoyer un email"
                   onClick={() => handleEmail(selectedPoi.email)}
                 >
@@ -74,7 +74,7 @@ export function SidebarDetail() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="flex min-w-[120px] items-start justify-start gap-2 p-2"
+                  className="flex min-w-[120px] justify-start gap-2 p-2"
                   title="Visiter le site sur un autre onglet"
                   onClick={() => handleVisiteWebsite(selectedPoi.website)}
                 >

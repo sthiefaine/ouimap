@@ -1,5 +1,7 @@
 "use client";
 import { PointPoiType } from "@/app/api/pois/data";
+import { LineLayer } from "mapbox-gl";
+import { GeoJSONFeature, GeoJSONSource } from "mapbox-gl";
 import { create } from "zustand";
 
 export type GeneralStoreState = {
@@ -12,6 +14,8 @@ export type GeneralStoreState = {
   poisData: PointPoiType[];
   selectedPoi: PointPoiType | null;
   optionZoom: number;
+  route: GeoJSON.LineString;
+  setRoute: (route: GeoJSON.LineString) => void;
 };
 
 export type GeneralStoreActions = {
@@ -24,6 +28,7 @@ export type GeneralStoreActions = {
   setPoisData: (poisData: PointPoiType[]) => void;
   setSelectedPoi: (selectedPoi: PointPoiType | null) => void;
   setOptionZoom: (optionZoom: number) => void;
+  setRoute: (route: GeoJSON.LineString) => void;
 };
 
 export type GeneralStore = GeneralStoreState & GeneralStoreActions;
@@ -38,6 +43,10 @@ export const defaultInitState: GeneralStore = {
   mapCoordinates: [0, 0],
   selectedPoi: null,
   optionZoom: 2,
+  route: {
+    type: "LineString",
+    coordinates: []
+  },
   setIsLoading: () => null,
   setError: () => null,
   setSearchQuery: () => null,
@@ -47,6 +56,7 @@ export const defaultInitState: GeneralStore = {
   setPoisData: () => null,
   setSelectedPoi: () => null,
   setOptionZoom: () => null,
+  setRoute: () => null
 };
 
 export const useGeneralSelectorStore = create<GeneralStore>((set) => ({
@@ -59,5 +69,7 @@ export const useGeneralSelectorStore = create<GeneralStore>((set) => ({
   setMapCoordinates: (coordinates) => set({ mapCoordinates: coordinates }),
   setPoisData: (poisData) => set({ poisData }),
   setSelectedPoi: (selectedPoi) => set({ selectedPoi }),
-  setOptionZoom: (optionZoom) => set({ optionZoom })
+  setOptionZoom: (optionZoom) => set({ optionZoom }),
+  setRoute: (route) => set({ route })
+  
 }));

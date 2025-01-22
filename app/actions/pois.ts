@@ -20,3 +20,4 @@ export async function getAllPois() {
   const data = await res.json();
   return data;
 }
+

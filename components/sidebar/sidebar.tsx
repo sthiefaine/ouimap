@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ExternalLink, Footprints, Mail, MapPin, Search } from "lucide-react";
+import { ExternalLink, Eye, Mail, MapPin, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { useShallow } from "zustand/shallow";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PointPoiType } from "@/app/api/pois/data";
 import { useDebounceValue } from "usehooks-ts";
 
@@ -110,7 +110,7 @@ export function Sidebar() {
               <div className="text-sm text-muted-foreground">
                 <div className="flex flex-row flex-wrap gap-2">
                   <Button
-                    className="flex min-w-[120px] items-start justify-start gap-2 p-2"
+                    className="flex min-w-[120px] justify-start gap-2 p-2"
                     onClick={() =>
                       handleSetMapCoordinates([
                         poi.coordinates.lng,
@@ -118,7 +118,7 @@ export function Sidebar() {
                       ])
                     }
                   >
-                    <Footprints className="h-4 w-4 shrink-0" />
+                    <Eye className="h-4 w-4 shrink-0" />
                     Afficher
                   </Button>
                   <Button
