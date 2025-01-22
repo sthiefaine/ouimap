@@ -1,7 +1,5 @@
 "use client";
 import { PointPoiType } from "@/app/api/pois/data";
-import { LineLayer } from "mapbox-gl";
-import { GeoJSONFeature, GeoJSONSource } from "mapbox-gl";
 import { create } from "zustand";
 
 export type GeneralStoreState = {

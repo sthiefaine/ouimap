@@ -6,7 +6,7 @@ import { useGeneralSelectorStore } from "@/store/generalStore";
 import { useShallow } from "zustand/shallow";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { PointPoiType } from "@/app/api/pois/data";
-import { getRoute } from "@/app/actions/route";
+import { getRoute } from "@/app/actions/routeData.action";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_GL_TOKEN;
 
@@ -81,7 +81,7 @@ export function MapDisplay() {
   const handleClickOnPoi = (e: any, poi: PointPoiType) => {
     e.originalEvent.stopPropagation();
 
-    setMapCoordinates([e.target._lngLat.lng, e.target._lngLat.lat]);
+    setMapCoordinates([poi.coordinates.lng, poi.coordinates.lat]);
 
     // Wait for the map to move before displaying the popup
     const handleMoveEnd = async () => {
@@ -99,6 +99,15 @@ export function MapDisplay() {
 
         const description = document.createElement("p");
         description.textContent = `${poi.address}`;
+
+        // add image if exist 100x100
+        console.log(poi)
+        if (poi.image) {
+          const image = document.createElement("img");
+          image.src = poi.image;
+          image.alt = poi.name;
+          popupContent.appendChild(image);
+        }
 
         const button = document.createElement("button");
         button.textContent = "Itineraire bureau";
@@ -125,6 +134,7 @@ export function MapDisplay() {
         // Ajouter les éléments au contenu du popup
         popupContent.appendChild(title);
         popupContent.appendChild(description);
+
 
         if(poi.id === "3") {
           popupContent.appendChild(button);
@@ -159,12 +169,12 @@ export function MapDisplay() {
             fill={true}
             quality={100}
             priority={true}
-            objectFit="cover"
             style={{
               position: "absolute",
               zIndex: 0,
               top: 0,
               left: 0,
+              objectFit: "cover",
             }}
           />
         </>

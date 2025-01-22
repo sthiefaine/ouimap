@@ -1,9 +1,10 @@
 "use server";
+
 import { Header } from "@/components/header";
 import { MapPageClient } from "@/components/map-client";
-import { getAllPois } from "./actions/pois";
+import { getAllPois } from "./actions/pois.action";
 
-async function getPois() {
+async function getData() {
   const data = await getAllPois();
   if (!data) {
     return [];
@@ -12,7 +13,7 @@ async function getPois() {
 }
 
 export default async function Page() {
-  const pois = await getPois();
+  const pois = await getData();
 
   return (
     <main className="h-screen w-screen relative overflow-hidden">

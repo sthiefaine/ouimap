@@ -1,5 +1,5 @@
 "use client";
-import { getRoute } from "@/app/actions/route";
+import { getRoute } from "@/app/actions/routeData.action";
 import { Button } from "@/components/ui/button";
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { Footprints, Trash2 } from "lucide-react";
@@ -67,7 +67,7 @@ export function Header() {
             </Button>
           )
           }
-          <Button size="sm" onClick={() => handleGoToTHeOffice()}>
+          <Button size="sm" disabled={route.coordinates.length !== 0 } onClick={() => handleGoToTHeOffice()}>
             <Footprints />Itineraire bureau
           </Button>
 

@@ -5,6 +5,7 @@ export type PointPoiType = {
   phone: string
   website: string
   email: string
+  image?: string
   coordinates: {
     type: string
     lat: number
@@ -33,11 +34,13 @@ export const WemapOfficesPois: PointPoiType[] = [
     phone: "+33 7 68 74 42 34",
     website: "https://getwemap.com/",
     email: "contact@getwemap.com",
+    image: "office.jpg",
     coordinates: {
       type: "Point",
       lat: 43.608973,
       lng: 3.916851,
     },
+
   },
 ]
 
