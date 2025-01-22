@@ -34,7 +34,7 @@ export const defaultInitState: GeneralStore = {
   error: null,
   searchQuery: "",
   mapIsOpen: false,
-  mapZoom: 1,
+  mapZoom: 0,
   mapCoordinates: [0, 0], 
   selectedPoi: null,
   optionZoom: 2,

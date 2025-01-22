@@ -109,19 +109,25 @@ export function MapDisplay() {
   };
 
   return (
-    <>
+    <div>
       {!isMapLoaded && (
+        <>
         <Image
+          className="imgMap"
           src="/mapTpl.png"
           alt="Map Placeholder"
           fill={true}
+          quality={100}
           priority={true}
+          objectFit="cover"
           style={{
             position: "absolute",
+            zIndex: 0,
             top: 0,
-            left: -1,
+            left: 0,
           }}
         />
+        </>
       )}
       <Map
         ref={mapRef}
@@ -135,7 +141,7 @@ export function MapDisplay() {
         onZoom={(e) => handleMapZoom(e)}
         mapboxAccessToken={MAPBOX_TOKEN}
         optimizeForTerrain={true}
-        onLoad={() => handleMapLoad()}
+         onLoad={() => handleMapLoad()}
         style={{
           opacity: isMapLoaded ? 1 : 0,
         }}
@@ -150,6 +156,6 @@ export function MapDisplay() {
             />
           ))}
       </Map>
-    </>
+    </div>
   );
 }
