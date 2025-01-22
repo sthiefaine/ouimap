@@ -1,6 +1,6 @@
-import { Suspense, use, useEffect, useRef, useState } from "react";
-import Map, { MapRef, Marker, MarkerEvent, MarkerProps } from "react-map-gl";
-import mapboxgl, { GeoJSONFeature } from "mapbox-gl";
+import { useEffect, useRef, useState } from "react";
+import Map, { MapRef, Marker } from "react-map-gl";
+import mapboxgl from "mapbox-gl";
 import Image from "next/image";
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { useShallow } from "zustand/shallow";
