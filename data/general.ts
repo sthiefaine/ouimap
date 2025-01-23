@@ -3,7 +3,7 @@ export const CITY_MONTPELLIER_COORDINATES = {
   lng: 3.876721,
 }
 
-export const getweMapPoisDefaultMock = {
+export const getWeMapPoisDefaultMock = {
   count: 0,
   next: null,
   previous: null,

@@ -2,8 +2,8 @@
 
 import { Header } from "@/components/header/header";
 import { MapPageClient } from "@/components/map/map-client";
-import { getAllPois, getweMapPois } from "./actions/pois.action";
-import { getweMapPoisDefaultMock } from "@/data/general";
+import { getAllPois, getWeMapPois } from "./actions/pois.action";
+import { getWeMapPoisDefaultMock } from "@/data/general";
 
 async function getData() {
   const data = await getAllPois();
@@ -15,18 +15,18 @@ async function getData() {
   return results;
 }
 
-async function getweMapPoisData() {
-  const weMapData = await getweMapPois("", 0, 10);
+async function getWeMapPoisData() {
+  const weMapData = await getWeMapPois("", 0, 10);
   const results = weMapData;
   if (!results) {
-    return getweMapPoisDefaultMock
+    return getWeMapPoisDefaultMock
   }
   return results;
 }
 
 export default async function Page() {
   const pois = await getData();
-  const weMapPois = await getweMapPoisData();
+  const weMapPois = await getWeMapPoisData();
 
   return (
     <main className="h-screen w-screen relative overflow-hidden">

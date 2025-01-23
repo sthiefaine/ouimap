@@ -2,7 +2,7 @@
 
 import { weMapPinspoint } from "@/types/pointPois";
 import { jobApplicant, weMapOfficesPois } from "../../data/data";
-import { getweMapPoisDefaultMock } from "@/data/general";
+import { getWeMapPoisDefaultMock } from "@/data/general";
 
 /* const BASE_URL =
   process.env.NODE_ENV === "production"
@@ -16,7 +16,7 @@ export async function getAllPois() {
   return data;
 }
 
-export async function getweMapPois(query: string, offset: number, limit: number) {
+export async function getWeMapPois(query: string, offset: number, limit: number) {
   // https://api.getweMap.com/v3.0/pinpoints/search?query=Musee&offset=0&limit=10
 
   console.log('too',query);
@@ -28,7 +28,7 @@ export async function getweMapPois(query: string, offset: number, limit: number)
       return data as weMapPinspoint;
     } catch (error) {
       console.error(error);
-      return getweMapPoisDefaultMock;
+      return getWeMapPoisDefaultMock;
     }
 
 

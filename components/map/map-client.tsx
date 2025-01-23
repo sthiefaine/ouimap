@@ -16,11 +16,11 @@ type MapPageClientProps = {
 }
 
 export function MapPageClient({ initialPois, weMapPois }: MapPageClientProps) {
-  const { setPoisData, selectedPoi, setweMapData } = useGeneralSelectorStore(
+  const { setPoisData, selectedPoi, setWeMapData } = useGeneralSelectorStore(
     useShallow(state => ({
       setPoisData: state.setPoisData,
       selectedPoi: state.selectedPoi,
-      setweMapData: state.setweMapData,
+      setWeMapData: state.setWeMapData,
       weMapData: state.weMapData
 
     }))
@@ -31,9 +31,8 @@ export function MapPageClient({ initialPois, weMapPois }: MapPageClientProps) {
   }, [initialPois, setPoisData])
 
   useEffect(() => {
-    setweMapData(weMapPois)
-  }, [weMapPois, setweMapData]
-
+    setWeMapData(weMapPois)
+  }, [weMapPois, setWeMapData]
   )
 
   return (
