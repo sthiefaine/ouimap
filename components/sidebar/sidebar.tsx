@@ -9,6 +9,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 
 import { useDebounceValue } from "usehooks-ts";
 import { PointPoiType } from "@/types/pointPois";
+import { AdaptPoiKeys, adpatPoisObject } from "@/helpers/adpatPois";
+import PaginationComponent from "../pagination/pagination";
 
 export function Sidebar() {
   const {
@@ -17,6 +19,7 @@ export function Sidebar() {
     searchQuery,
     setSearchQuery,
     setSelectedPoi,
+    weMapData,
   } = useGeneralSelectorStore(
     useShallow((state) => ({
       poisData: state.poisData,
@@ -24,15 +27,13 @@ export function Sidebar() {
       searchQuery: state.searchQuery,
       setSearchQuery: state.setSearchQuery,
       setSelectedPoi: state.setSelectedPoi,
+      weMapData: state.weMapData,
     }))
   );
 
   const [debouncedValue, setValue] = useDebounceValue("", 500);
   const [filteredPois, setFilteredPois] = useState<PointPoiType[]>([]);
-
-  useEffect(() => {
-    setFilteredPois(poisData);
-  }, [poisData]);
+  const [numberBasePois, setNumberBasePois] = useState(0);
 
   useEffect(() => {
     setSearchQuery(debouncedValue);
@@ -47,8 +48,12 @@ export function Sidebar() {
         poi.email.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    setFilteredPois(filteredItems);
-  }, [poisData, searchQuery]);
+    setNumberBasePois(filteredItems.length);
+    // filter complex POI DATA to simple POI DATA
+    const adpatPois = adpatPoisObject(weMapData.results, AdaptPoiKeys.WEMAP);
+
+    setFilteredPois([...filteredItems, ...adpatPois]);
+  }, [poisData, searchQuery, weMapData]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -72,7 +77,7 @@ export function Sidebar() {
   // https://grafikart.fr/tutoriels/intersection-observer-804
 
   return (
-    <div className="hidden w-[300px] border-r bg-white md:block">
+    <div className="hidden w-[300px] border-r bg-white md:block pb-60">
       <div className="relative w-full max-w-md pb-2 pt-2 pl-2 pr-2 flex items-center">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
@@ -99,7 +104,7 @@ export function Sidebar() {
         )}
       </div>
       <ScrollArea className="h-full">
-        <div className="p-1 pb-20">
+        <div className="p-1">
           {filteredPois?.map((poi, index) => (
             <div
               key={index}
@@ -151,6 +156,10 @@ export function Sidebar() {
           ))}
         </div>
       </ScrollArea>
+          <PaginationComponent
+          currentPage={1}
+          totalPages={weMapData.count+numberBasePois}
+          />
     </div>
   );
 }

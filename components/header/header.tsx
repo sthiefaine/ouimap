@@ -31,7 +31,7 @@ export function Header() {
   };
 
   const handleGoToTHeOffice = () => {
-    const office = poisData.find((poi) => poi.name === "Wemap Montpellier");
+    const office = poisData.find((poi) => poi.name === "weMap Montpellier");
     const people = poisData.find((poi) => poi.name === "Thiefaine");
 
     if (!office || !people) return;

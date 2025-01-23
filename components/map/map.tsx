@@ -112,7 +112,7 @@ export function MapDisplay() {
         button.textContent = "Itineraire bureau";
         button.className = "bg-blue-500 text-white px-3 py-1 rounded mt-2";
 
-        const bureau = poisData.find((p) => p.name === "Wemap Montpellier");
+        const bureau = poisData.find((p) => p.name === "weMap Montpellier");
         if (!bureau) return;
 
         const routeData = await getRoute(

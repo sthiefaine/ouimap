@@ -2,14 +2,14 @@ import { PointPoiType } from "@/types/pointPois"
 import { CITY_MONTPELLIER_COORDINATES } from "./general"
 
 
-export const WemapOfficesPois: PointPoiType[] = [
+export const weMapOfficesPois: PointPoiType[] = [
   {
     id: "1",
-    name: "Wemap Paris",
+    name: "weMap Paris",
     address: "100 rue La Fayette 75010 Paris France",
     phone: "+33 7 68 74 42 34",
-    website: "https://getwemap.com/",
-    email: "contact@getwemap.com",
+    website: "https://getweMap.com/",
+    email: "contact@getweMap.com",
     coordinates: {
       type: "Point",
       lat: 48.877445,
@@ -18,11 +18,11 @@ export const WemapOfficesPois: PointPoiType[] = [
   },
   {
     id: "2",
-    name: "Wemap Montpellier",
+    name: "weMap Montpellier",
     address: "Parc Club du Millénaire Batiment 23, 34000 Montpellier",
     phone: "+33 7 68 74 42 34",
-    website: "https://getwemap.com/",
-    email: "contact@getwemap.com",
+    website: "https://getweMap.com/",
+    email: "contact@getweMap.com",
     image: "office.jpg",
     coordinates: {
       type: "Point",

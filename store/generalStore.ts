@@ -1,5 +1,5 @@
 "use client";
-import { PointPoiType } from "@/types/pointPois";
+import { PointPoiType, weMapPinspoint } from "@/types/pointPois";
 import { create } from "zustand";
 
 export type GeneralStoreState = {
@@ -13,7 +13,7 @@ export type GeneralStoreState = {
   selectedPoi: PointPoiType | null;
   optionZoom: number;
   route: GeoJSON.LineString;
-  setRoute: (route: GeoJSON.LineString) => void;
+  weMapData: weMapPinspoint;
 };
 
 export type GeneralStoreActions = {
@@ -27,6 +27,7 @@ export type GeneralStoreActions = {
   setSelectedPoi: (selectedPoi: PointPoiType | null) => void;
   setOptionZoom: (optionZoom: number) => void;
   setRoute: (route: GeoJSON.LineString) => void;
+  setweMapData: (weMapData: weMapPinspoint) => void;
 };
 
 export type GeneralStore = GeneralStoreState & GeneralStoreActions;
@@ -43,7 +44,13 @@ export const defaultInitState: GeneralStore = {
   optionZoom: 2,
   route: {
     type: "LineString",
-    coordinates: []
+    coordinates: [],
+  },
+  weMapData: {
+    count: 0,
+    next: null,
+    previous: null,
+    results: [],
   },
   setIsLoading: () => null,
   setError: () => null,
@@ -54,7 +61,8 @@ export const defaultInitState: GeneralStore = {
   setPoisData: () => null,
   setSelectedPoi: () => null,
   setOptionZoom: () => null,
-  setRoute: () => null
+  setRoute: () => null,
+  setweMapData: () => null,
 };
 
 export const useGeneralSelectorStore = create<GeneralStore>((set) => ({
@@ -68,5 +76,6 @@ export const useGeneralSelectorStore = create<GeneralStore>((set) => ({
   setPoisData: (poisData) => set({ poisData }),
   setSelectedPoi: (selectedPoi) => set({ selectedPoi }),
   setOptionZoom: (optionZoom) => set({ optionZoom }),
-  setRoute: (route) => set({ route })
+  setRoute: (route) => set({ route }),
+  setweMapData: (weMapData) => set({ weMapData }),
 }));

@@ -1,4 +1,4 @@
-import { TouchEventHandler, useState } from "react";
+import { useState } from "react";
 import styles from "./sidebarBottom.module.css";
 import { Eye, Minus } from "lucide-react";
 import { useGeneralSelectorStore } from "@/store/generalStore";
