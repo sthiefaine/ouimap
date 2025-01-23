@@ -9,7 +9,7 @@
   border-top: 1px solid #e5e7eb;
   height: 60px;
   transition: height 0.3s ease-in-out;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .sidebarBottom.open {
@@ -24,7 +24,6 @@
 
 .poiCard {
   width: calc(100%);
-
 }
 
 .poiTitle {

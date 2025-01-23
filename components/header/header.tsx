@@ -1,5 +1,5 @@
 "use client";
-import { getRoute } from "@/app/actions/routeData.action";
+import { getRoute } from "@/app/actions/route.action";
 import { Button } from "@/components/ui/button";
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { Footprints, Trash2 } from "lucide-react";

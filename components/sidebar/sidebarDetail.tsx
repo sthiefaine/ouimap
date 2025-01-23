@@ -1,12 +1,7 @@
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { Button } from "../ui/button";
 import { useShallow } from "zustand/shallow";
-import {
-  CornerDownLeft,
-  ExternalLink,
-  Mail,
-  MapPin,
-} from "lucide-react";
+import { CornerDownLeft, ExternalLink, Mail, MapPin } from "lucide-react";
 
 export function SidebarDetail() {
   const { selectedPoi, setMapCoordinates, setSelectedPoi } =

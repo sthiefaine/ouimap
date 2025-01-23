@@ -1,16 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import Map, { Layer, MapRef, Marker, Source } from "react-map-gl";
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { MapEvent } from "mapbox-gl";
 import Image from "next/image";
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { useShallow } from "zustand/shallow";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { PointPoiType } from "@/app/api/pois/data";
-import { getRoute } from "@/app/actions/routeData.action";
+import { PointPoiType } from "@/types/pointPois";
+import { getRoute } from "@/app/actions/route.action";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_GL_TOKEN;
-
-const MAPBOX_DEFAULT_CENTER = { lat: 41.4134289, lng: 30.8300695 };
 const MAPBOX_DEFAULT_CENTER_0 = { lat: 80, lng: 0 };
 const MAPBOX_DEFAULT_ZOOM = 0.8;
 const MAPBOX_MIN_ZOOM_DISPLAY_POPUP = 8;
@@ -74,10 +72,11 @@ export function MapDisplay() {
     handleFlyTo(mapCoordinates[0], mapCoordinates[1]);
   }, [mapCoordinates]);
 
-  const handleMapZoom = (e: any) => {
+  const handleMapZoom = (e: MapEvent) => {
     setMapZoom(e.target.getZoom());
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleClickOnPoi = (e: any, poi: PointPoiType) => {
     e.originalEvent.stopPropagation();
 
@@ -101,7 +100,7 @@ export function MapDisplay() {
         description.textContent = `${poi.address}`;
 
         // add image if exist 100x100
-        console.log(poi)
+        console.log(poi);
         if (poi.image) {
           const image = document.createElement("img");
           image.src = poi.image;
@@ -116,17 +115,20 @@ export function MapDisplay() {
         const bureau = poisData.find((p) => p.name === "Wemap Montpellier");
         if (!bureau) return;
 
-        const routeData = await getRoute({
-          latitude: poi.coordinates.lat,
-          longitude: poi.coordinates.lng,
-        }, {
-          latitude: bureau.coordinates.lat,
-          longitude: bureau.coordinates.lng,
-        });
+        const routeData = await getRoute(
+          {
+            latitude: poi.coordinates.lat,
+            longitude: poi.coordinates.lng,
+          },
+          {
+            latitude: bureau.coordinates.lat,
+            longitude: bureau.coordinates.lng,
+          }
+        );
 
         button.addEventListener("click", () => {
           const route: GeoJSON.LineString = {
-            ...routeData
+            ...routeData,
           };
           setRoute(route);
         });
@@ -135,8 +137,7 @@ export function MapDisplay() {
         popupContent.appendChild(title);
         popupContent.appendChild(description);
 
-
-        if(poi.id === "3") {
+        if (poi.id === "3") {
           popupContent.appendChild(button);
         }
 
@@ -198,9 +199,9 @@ export function MapDisplay() {
       >
         <>
           {poisData?.length > 0 &&
-            poisData.map((poi) => (
+            poisData.map((poi, index) => (
               <Marker
-                key={poi.id}
+                key={poi.id + "-" + index}
                 longitude={poi.coordinates.lng}
                 latitude={poi.coordinates.lat}
                 onClick={(e) => handleClickOnPoi(e, poi)}
@@ -214,7 +215,7 @@ export function MapDisplay() {
                 type="line"
                 paint={{
                   "line-color": "#007cbf",
-                  "line-width": 4,
+                  "line-width": 3,
                 }}
               />
             </Source>

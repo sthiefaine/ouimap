@@ -1,7 +1,7 @@
 "use server";
 
-import { Header } from "@/components/header";
-import { MapPageClient } from "@/components/map-client";
+import { Header } from "@/components/header/header";
+import { MapPageClient } from "@/components/map/map-client";
 import { getAllPois } from "./actions/pois.action";
 
 async function getData() {

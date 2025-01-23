@@ -5,21 +5,27 @@ import { ExternalLink, Eye, Mail, MapPin, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { useShallow } from "zustand/shallow";
-import { useEffect, useState } from "react";
-import { PointPoiType } from "@/app/api/pois/data";
+import { ChangeEvent, useEffect, useState } from "react";
+
 import { useDebounceValue } from "usehooks-ts";
+import { PointPoiType } from "@/types/pointPois";
 
 export function Sidebar() {
-  const { poisData, setMapCoordinates, searchQuery, setSearchQuery, setSelectedPoi } =
-    useGeneralSelectorStore(
-      useShallow((state) => ({
-        poisData: state.poisData,
-        setMapCoordinates: state.setMapCoordinates,
-        searchQuery: state.searchQuery,
-        setSearchQuery: state.setSearchQuery,
-        setSelectedPoi: state.setSelectedPoi,
-      }))
-    );
+  const {
+    poisData,
+    setMapCoordinates,
+    searchQuery,
+    setSearchQuery,
+    setSelectedPoi,
+  } = useGeneralSelectorStore(
+    useShallow((state) => ({
+      poisData: state.poisData,
+      setMapCoordinates: state.setMapCoordinates,
+      searchQuery: state.searchQuery,
+      setSearchQuery: state.setSearchQuery,
+      setSelectedPoi: state.setSelectedPoi,
+    }))
+  );
 
   const [debouncedValue, setValue] = useDebounceValue("", 500);
   const [filteredPois, setFilteredPois] = useState<PointPoiType[]>([]);
@@ -30,7 +36,7 @@ export function Sidebar() {
 
   useEffect(() => {
     setSearchQuery(debouncedValue);
-  }, [debouncedValue]);
+  }, [debouncedValue, setSearchQuery]);
 
   useEffect(() => {
     const filteredItems = poisData.filter(
@@ -44,7 +50,7 @@ export function Sidebar() {
     setFilteredPois(filteredItems);
   }, [poisData, searchQuery]);
 
-  const handleSearch = (e: any) => {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 

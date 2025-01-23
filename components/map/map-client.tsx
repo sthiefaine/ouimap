@@ -1,14 +1,14 @@
 'use client'
 
 import { useEffect } from 'react'
-import { MapDisplay } from "@/components/map"
-import { MapControls } from "@/components/map-controls"
+import { MapDisplay } from "@/components/map/map"
+import { MapControls } from "@/components/map/map-controls"
 import { Sidebar } from "@/components/sidebar/sidebar"
 import { useGeneralSelectorStore } from "@/store/generalStore"
-import { PointPoiType } from '@/app/api/pois/data'
 import { useShallow } from 'zustand/shallow'
-import { SidebarDetail } from './sidebar/sidebarDetail'
-import { SidebarBottom } from './sidebar/bottom/sidebarBottom'
+import { SidebarDetail } from '../sidebar/sidebarDetail'
+import { SidebarBottom } from '../sidebar/bottom/sidebarBottom'
+import { PointPoiType } from '@/types/pointPois'
 
 type MapPageClientProps = {
   initialPois: PointPoiType[]

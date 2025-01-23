@@ -1,5 +1,5 @@
 "use client";
-import { PointPoiType } from "@/app/api/pois/data";
+import { PointPoiType } from "@/types/pointPois";
 import { create } from "zustand";
 
 export type GeneralStoreState = {
@@ -69,5 +69,4 @@ export const useGeneralSelectorStore = create<GeneralStore>((set) => ({
   setSelectedPoi: (selectedPoi) => set({ selectedPoi }),
   setOptionZoom: (optionZoom) => set({ optionZoom }),
   setRoute: (route) => set({ route })
-  
 }));

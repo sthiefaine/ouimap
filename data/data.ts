@@ -1,17 +1,6 @@
-export type PointPoiType = {
-  id: string
-  name: string
-  address: string
-  phone: string
-  website: string
-  email: string
-  image?: string
-  coordinates: {
-    type: string
-    lat: number
-    lng: number
-  }
-}
+import { PointPoiType } from "@/types/pointPois"
+import { CITY_MONTPELLIER_COORDINATES } from "./general"
+
 
 export const WemapOfficesPois: PointPoiType[] = [
   {
@@ -23,8 +12,8 @@ export const WemapOfficesPois: PointPoiType[] = [
     email: "contact@getwemap.com",
     coordinates: {
       type: "Point",
-      lat: 48.856614,
-      lng: 2.352222,
+      lat: 48.877445,
+      lng: 2.350321,
     },
   },
   {
@@ -43,11 +32,6 @@ export const WemapOfficesPois: PointPoiType[] = [
 
   },
 ]
-
-const CITY_MONTPELLIER_COORDINATES = {
-  lat: 43.610705,
-  lng: 3.876721,
-}
 
 export const jobApplicant: PointPoiType = {
   id: "3",
