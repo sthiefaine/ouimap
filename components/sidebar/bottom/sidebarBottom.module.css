@@ -13,44 +13,11 @@
 }
 
 .sidebarBottom.open {
-  height: 200px;
+  height: 310px;
 }
 
 @media screen and (min-width: 768px) {
   .sidebarBottom {
     display: none;
   }
-}
-
-.poiCard {
-  width: calc(100%);
-}
-
-.poiTitle {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #111827;
-  margin-bottom: 4px;
-}
-
-.poiAddress {
-  font-size: 0.875rem;
-  color: #6b7280;
-}
-
-.poiButton {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.875rem;
-  padding: 8px 12px;
-  border: 1px solid #3b82f6;
-  color: #3b82f6;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.poiButton:hover {
-  background-color: #eff6ff;
 }

@@ -17,9 +17,10 @@ export async function getAllPois() {
 }
 
 export async function getWeMapPois(query: string, offset: number, limit: number) {
-  // https://api.getweMap.com/v3.0/pinpoints/search?query=Musee&offset=0&limit=10
+  // https://api.getweMap.com/v3.0/pinpoints/search?query=&offset=0&limit=10
+  // DEBUG
+  //console.log('getWeMapPois',query, offset, limit);
 
-  console.log('too',query);
     try {
       const response = await fetch(
         `https://api.getweMap.com/v3.0/pinpoints/search?query=${query}&offset=${offset}&limit=${limit}`

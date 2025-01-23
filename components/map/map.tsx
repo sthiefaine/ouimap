@@ -18,21 +18,32 @@ const MAPBOX_STYLE_OPTIONS = { optimize_value: "?optimize=true" };
 export function MapDisplay() {
   const {
     mapCoordinates,
-    poisData,
     setMapCoordinates,
     setMapZoom,
     optionZoom,
     route,
     setRoute,
+    filteredPois,
+    backToList,
+    setBackToList,
+    setSelectedPoi,
+    selectedPoi,
   } = useGeneralSelectorStore(
     useShallow((state) => ({
       mapCoordinates: state.mapCoordinates,
-      poisData: state.poisData,
       setMapCoordinates: state.setMapCoordinates,
       setMapZoom: state.setMapZoom,
       optionZoom: state.optionZoom,
       route: state.route,
       setRoute: state.setRoute,
+      filteredPois: state.filteredPois,
+      poisData: state.poisData,
+      mapZoom: state.mapZoom,
+      setOptionZoom: state.setOptionZoom,
+      backToList: state.backToList,
+      setBackToList: state.setBackToList,
+      setSelectedPoi: state.setSelectedPoi,
+      selectedPoi: state.selectedPoi,
     }))
   );
 
@@ -54,23 +65,36 @@ export function MapDisplay() {
 
   useEffect(() => {
     if (mapRef.current) {
+      if (optionZoom === mapRef.current.getZoom()) return;
+      setMapZoom(optionZoom);
       mapRef.current.flyTo({ zoom: optionZoom });
     }
-  }, [optionZoom]);
-
-  const handleFlyTo = (lng: number, lat: number) => {
-    if (mapRef.current) {
-      const currentZoom = mapRef.current.getZoom();
-      mapRef.current.flyTo({
-        center: [lng, lat],
-        zoom: currentZoom >= 12 ? currentZoom : 12,
-      });
-    }
-  };
+  }, [optionZoom, setMapZoom]);
 
   useEffect(() => {
+    const handleFlyTo = (lng: number, lat: number) => {
+      if (mapRef.current) {
+        const currentZoom = mapRef.current.getZoom();
+        mapRef.current.flyTo({
+          center: [lng, lat],
+          zoom: currentZoom >= 12 ? currentZoom : 12,
+        });
+      }
+    };
     handleFlyTo(mapCoordinates[0], mapCoordinates[1]);
   }, [mapCoordinates]);
+
+  useEffect(() => {
+    if (backToList && mapRef.current) {
+      mapRef.current.flyTo({
+        center: [mapCoordinates[0], mapCoordinates[1]],
+        zoom: 2
+      });
+      setBackToList(false)
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [backToList])
 
   const handleMapZoom = (e: MapEvent) => {
     setMapZoom(e.target.getZoom());
@@ -100,7 +124,6 @@ export function MapDisplay() {
         description.textContent = `${poi.address}`;
 
         // add image if exist 100x100
-        console.log(poi);
         if (poi.image) {
           const image = document.createElement("img");
           image.src = poi.image;
@@ -108,36 +131,46 @@ export function MapDisplay() {
           popupContent.appendChild(image);
         }
 
-        const button = document.createElement("button");
-        button.textContent = "Itineraire bureau";
-        button.className = "bg-blue-500 text-white px-3 py-1 rounded mt-2";
-
-        const bureau = poisData.find((p) => p.name === "weMap Montpellier");
-        if (!bureau) return;
-
-        const routeData = await getRoute(
-          {
-            latitude: poi.coordinates.lat,
-            longitude: poi.coordinates.lng,
-          },
-          {
-            latitude: bureau.coordinates.lat,
-            longitude: bureau.coordinates.lng,
-          }
-        );
-
-        button.addEventListener("click", () => {
-          const route: GeoJSON.LineString = {
-            ...routeData,
-          };
-          setRoute(route);
-        });
-
-        // Ajouter les éléments au contenu du popup
         popupContent.appendChild(title);
         popupContent.appendChild(description);
 
-        if (poi.id === "3") {
+        // Add button if exist for fun
+        const bureau = filteredPois.find((p) => p.name === "weMap Montpellier");
+        if (bureau && poi.name === "Thiefaine") {
+          const routeData = await getRoute(
+            {
+              latitude: poi.coordinates.lat,
+              longitude: poi.coordinates.lng,
+            },
+            {
+              latitude: bureau.coordinates.lat,
+              longitude: bureau.coordinates.lng,
+            }
+          );
+
+          const button = document.createElement("button");
+          button.textContent = "Itineraire bureau";
+          button.className = "bg-blue-500 text-white px-3 py-1 rounded mt-2";
+
+          button.addEventListener("click", () => {
+            const route: GeoJSON.LineString = {
+              ...routeData,
+            };
+            setRoute(route);
+          });
+          popupContent.appendChild(button);
+        }
+
+        if (poi.name !== "Thiefaine" && selectedPoi !== poi) {
+
+          const button = document.createElement("button");
+          button.textContent = "Voir les informations";
+          button.className = "bg-blue-500 text-white px-3 py-1 rounded mt-2";
+
+          button.addEventListener("click", () => {
+
+            setSelectedPoi(poi);
+          });
           popupContent.appendChild(button);
         }
 
@@ -198,8 +231,8 @@ export function MapDisplay() {
         }}
       >
         <>
-          {poisData?.length > 0 &&
-            poisData.map((poi, index) => (
+          {filteredPois?.length > 0 &&
+            filteredPois.map((poi, index) => (
               <Marker
                 key={poi.id + "-" + index}
                 longitude={poi.coordinates.lng}

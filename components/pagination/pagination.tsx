@@ -37,7 +37,7 @@ export default function PaginationComponent({
               buttonVariants({
                 variant: "outline",
               }),
-              "rounded-none shadow-none focus-visible:z-10 aria-disabled:pointer-events-none [&[aria-disabled]>svg]:opacity-50",
+              "rounded-none shadow-none focus-visible:z-10 aria-disabled:pointer-events-none [&[aria-disabled]>svg]:opacity-50"
             )}
             href={currentPage === 1 ? undefined : `#/page/${currentPage - 1}`}
             aria-label="Go to previous page"
@@ -64,7 +64,7 @@ export default function PaginationComponent({
                   variant: "outline",
                 }),
                 "rounded-none shadow-none focus-visible:z-10",
-                page === currentPage && "bg-accent",
+                page === currentPage && "bg-accent"
               )}
               href={`#/page/${page}`}
               isActive={page === currentPage}
@@ -82,7 +82,7 @@ export default function PaginationComponent({
                 buttonVariants({
                   variant: "outline",
                 }),
-                "pointer-events-none rounded-none shadow-none",
+                "pointer-events-none rounded-none shadow-none"
               )}
             />
           </PaginationItem>
@@ -95,9 +95,13 @@ export default function PaginationComponent({
               buttonVariants({
                 variant: "outline",
               }),
-              "rounded-none shadow-none focus-visible:z-10 aria-disabled:pointer-events-none [&[aria-disabled]>svg]:opacity-50",
+              "rounded-none shadow-none focus-visible:z-10 aria-disabled:pointer-events-none [&[aria-disabled]>svg]:opacity-50"
             )}
-            href={currentPage === totalPages ? undefined : `#/page/${currentPage + 1}`}
+            href={
+              currentPage === totalPages
+                ? undefined
+                : `#/page/${currentPage + 1}`
+            }
             aria-label="Go to next page"
             aria-disabled={currentPage === totalPages ? true : undefined}
             role={currentPage === totalPages ? "link" : undefined}

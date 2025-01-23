@@ -14,6 +14,11 @@ export type GeneralStoreState = {
   optionZoom: number;
   route: GeoJSON.LineString;
   weMapData: weMapPinspoint;
+  filteredPois: PointPoiType[];
+  backToList: boolean;
+  currentPage: number;
+  totalPages: number;
+  numberBasePois: number;
 };
 
 export type GeneralStoreActions = {
@@ -28,6 +33,11 @@ export type GeneralStoreActions = {
   setOptionZoom: (optionZoom: number) => void;
   setRoute: (route: GeoJSON.LineString) => void;
   setWeMapData: (weMapData: weMapPinspoint) => void;
+  setFilteredPois: (filteredPois: PointPoiType[]) => void;
+  setBackToList: (backToList: boolean) => void;
+  setCurrentPage: (currentPage: number) => void;
+  setTotalPages: (totalPages: number) => void;
+  setNumberBasePois: (numberBasePois: number) => void;
 };
 
 export type GeneralStore = GeneralStoreState & GeneralStoreActions;
@@ -52,6 +62,11 @@ export const defaultInitState: GeneralStore = {
     previous: null,
     results: [],
   },
+  filteredPois: [],
+  backToList: false,
+  currentPage: 1,
+  totalPages: 1,
+  numberBasePois: 0,
   setIsLoading: () => null,
   setError: () => null,
   setSearchQuery: () => null,
@@ -63,6 +78,11 @@ export const defaultInitState: GeneralStore = {
   setOptionZoom: () => null,
   setRoute: () => null,
   setWeMapData: () => null,
+  setFilteredPois: () => null,
+  setBackToList: () => null,
+  setCurrentPage: () => null,
+  setTotalPages: () => null,
+  setNumberBasePois: () => null,
 };
 
 export const useGeneralSelectorStore = create<GeneralStore>((set) => ({
@@ -78,4 +98,9 @@ export const useGeneralSelectorStore = create<GeneralStore>((set) => ({
   setOptionZoom: (optionZoom) => set({ optionZoom }),
   setRoute: (route) => set({ route }),
   setWeMapData: (weMapData) => set({ weMapData }),
+  setFilteredPois: (filteredPois) => set({ filteredPois }),
+  setBackToList: (backToList) => set({ backToList }),
+  setCurrentPage: (currentPage) => set({ currentPage }),
+  setTotalPages: (totalPages) => set({ totalPages }),
+  setNumberBasePois: (numberBasePois) => set({ numberBasePois }),
 }));

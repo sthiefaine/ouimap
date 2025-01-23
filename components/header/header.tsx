@@ -31,7 +31,7 @@ export function Header() {
   };
 
   const handleGoToTHeOffice = () => {
-    const office = poisData.find((poi) => poi.name === "weMap Montpellier");
+    const office = poisData.find((poi) => poi.name === "Wemap Montpellier");
     const people = poisData.find((poi) => poi.name === "Thiefaine");
 
     if (!office || !people) return;
@@ -48,7 +48,7 @@ export function Header() {
   };
 
   return (
-    <header className="h-16 border-b bg-white px-2">
+    <header className="border-b bg-white px-2 fixed top-0 z-10 w-full h-[64px]"> 
       <div className="flex h-full items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
