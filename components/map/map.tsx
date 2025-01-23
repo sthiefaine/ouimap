@@ -135,7 +135,7 @@ export function MapDisplay() {
         popupContent.appendChild(description);
 
         // Add button if exist for fun
-        const bureau = filteredPois.find((p) => p.name === "weMap Montpellier");
+        const bureau = filteredPois.find((p) => p.name === "Wemap Montpellier");
         if (bureau && poi.name === "Thiefaine") {
           const routeData = await getRoute(
             {
