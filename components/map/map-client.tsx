@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { MapDisplay } from "@/components/map/map";
 import { MapControls } from "@/components/map/map-controls";
 import { Sidebar } from "@/components/sidebar/sidebar";
@@ -92,8 +92,10 @@ export function MapPageClient({ initialPois, weMapPois }: MapPageClientProps) {
         <MapDisplay />
         <MapControls />
       </div>
-      <Sidebar />
-      <SidebarBottom />
+      <Suspense fallback={<div></div>}>
+        <Sidebar />
+        <SidebarBottom />
+      </Suspense>
     </div>
   );
 }

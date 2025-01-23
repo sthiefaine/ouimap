@@ -23,7 +23,7 @@ export async function getWeMapPois(query: string, offset: number, limit: number)
 
     try {
       const response = await fetch(
-        `https://api.getweMap.com/v3.0/pinpoints/search?query=${query}&offset=${offset}&limit=${limit}`
+        `https://api.getweMap.com/v3.0/pinpoints/search?query=${encodeURIComponent(query)}&offset=${offset}&limit=${limit}`
       );
       const data = await response.json();
       return data as weMapPinspoint;
