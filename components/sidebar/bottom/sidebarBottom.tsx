@@ -2,7 +2,7 @@
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { useShallow } from "zustand/shallow";
 import { useEffect, useRef, useState } from "react";
-import { CornerDownLeft, ExternalLink, Mail, Search } from "lucide-react";
+import { CornerDownLeft, ExternalLink, Eye, Mail, Search } from "lucide-react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
@@ -168,7 +168,7 @@ export function SidebarBottom() {
           </Button>
         </div>
         <div className="w-full flex items-center justify-center">
-          <div className="w-[80vw] mb-2 flex items-start justify-start gap-2 p-2 cursor-pointer hover:bg-slate-100 flex-col border-slate-900 border-2 rounded-lg">
+          <div className="w-[80vw] mb-[5px] flex items-start justify-start gap-2 cursor-pointer hover:bg-slate-100 flex-col border-slate-900 border-2 rounded-lg">
             <div
               className="mb-2 flex items-start justify-start gap-1 m-4 cursor-pointer hover:bg-slate-100 flex-col border-slate-100"
               onClick={() =>
@@ -194,9 +194,20 @@ export function SidebarBottom() {
               </div>
               <div className="h-full text-sm text-muted-foreground">
                 <div className="flex flex-row flex-wrap gap-2">
+                <Button
+                    className="flex min-w-[20px]"
+                    onClick={() =>
+                      handleSetMapCoordinates([
+                        selectedPoi.coordinates.lng,
+                        selectedPoi.coordinates.lat,
+                      ])
+                    }
+                  >
+                    <Eye className="h-4 w-4 shrink-0" />
+                  </Button>
                   <Button
                     variant="outline"
-                    className="flex min-w-[120px] justify-start gap-2 p-2"
+                    className="flex min-w-[100px] justify-start gap-2 p-2"
                     title="Envoyer un email"
                     onClick={() => handleEmail(selectedPoi.email)}
                   >
@@ -205,12 +216,12 @@ export function SidebarBottom() {
                   </Button>
                   <Button
                     variant="outline"
-                    className="flex min-w-[120px] justify-start gap-2 p-2"
+                    className="flex min-w-[80px] justify-start gap-2 p-2"
                     title="Visiter le site sur un autre onglet"
                     onClick={() => handleVisiteWebsite(selectedPoi.website)}
                   >
                     <ExternalLink className="h-4 w-4 shrink-0" />
-                    Site internet
+                    Site
                   </Button>
                 </div>
               </div>

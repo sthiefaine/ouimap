@@ -86,7 +86,7 @@ export function Sidebar() {
   }, [debouncedValue, setSearchQuery]);
 
   useEffect(() => {
-    if(debouncedValue.length !== 0) {
+    if (debouncedValue.length !== 0) {
       searchInputRef?.current?.focus();
     }
   }, [debouncedValue.length, filteredPois]);
@@ -224,10 +224,21 @@ export function Sidebar() {
               </div>
             </div>
             <div className="h-full text-sm text-muted-foreground">
-              <div className="flex flex-row flex-wrap gap-2">
+              <div className="flex flex-row gap-1">
+                <Button
+                  className="flex min-w-[20px]"
+                  onClick={() =>
+                    handleSetMapCoordinates([
+                      selectedPoi.coordinates.lng,
+                      selectedPoi.coordinates.lat,
+                    ])
+                  }
+                >
+                  <Eye className="h-4 w-4 shrink-0" />
+                </Button>
                 <Button
                   variant="outline"
-                  className="flex min-w-[120px] justify-start gap-2 p-2"
+                  className="flex min-w-[100px] justify-start gap-2 p-2"
                   title="Envoyer un email"
                   onClick={() => handleEmail(selectedPoi.email)}
                 >
