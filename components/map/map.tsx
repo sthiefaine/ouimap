@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Map, { Layer, MapRef, Marker, Source } from "react-map-gl";
 import mapboxgl, { MapEvent } from "mapbox-gl";
 import { useGeneralSelectorStore } from "@/store/generalStore";
@@ -135,9 +135,7 @@ export function MapDisplay() {
         popupContent.appendChild(description);
 
         // Add button if exist for fun
-        const bureau = filteredPois.find(
-          (p) => p.name === "Wemap Montpellier" || p.name === "Wemap Paris"
-        );
+        const bureau = filteredPois.find((p) => p.name === "Wemap Montpellier");
         if (bureau && poi.name === "Thiefaine") {
           const routeData = await getRoute(
             {

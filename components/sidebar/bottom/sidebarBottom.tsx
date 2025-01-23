@@ -71,10 +71,15 @@ export function SidebarBottom() {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollLeft = 0;
     }
-    if(debouncedValue.length !== 0) {
+    if (debouncedValue.length !== 0) {
       searchInputRef?.current?.focus();
     }
   }, [debouncedValue.length, filteredPois]);
+
+  useEffect(() => {
+    if (!selectedPoi) return;
+    setIsOpen(true);
+  }, [selectedPoi]);
 
   const handleTouchEnd = () => {
     setStartY(0);
