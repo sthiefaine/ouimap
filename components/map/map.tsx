@@ -1,16 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Map, { Layer, MapRef, Marker, Source } from "react-map-gl";
 import mapboxgl, { MapEvent } from "mapbox-gl";
-import Image from "next/image";
 import { useGeneralSelectorStore } from "@/store/generalStore";
 import { useShallow } from "zustand/shallow";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { PointPoiType } from "@/types/pointPois";
 import { getRoute } from "@/app/actions/route.action";
+import Image from "next/image";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_GL_TOKEN;
-const MAPBOX_DEFAULT_CENTER_0 = { lat: 80, lng: 0 };
-const MAPBOX_DEFAULT_ZOOM = 0.8;
+const MAPBOX_DEFAULT_CENTER_0 = { lat: 0, lng: 0 };
+const MAPBOX_DEFAULT_ZOOM = 0;
 const MAPBOX_MIN_ZOOM_DISPLAY_POPUP = 8;
 const MAPBOX_DEFAULT_STYLE = "mapbox://styles/mapbox/streets-v12";
 const MAPBOX_STYLE_OPTIONS = { optimize_value: "?optimize=true" };
@@ -88,13 +88,13 @@ export function MapDisplay() {
     if (backToList && mapRef.current) {
       mapRef.current.flyTo({
         center: [mapCoordinates[0], mapCoordinates[1]],
-        zoom: 2
+        zoom: 2,
       });
-      setBackToList(false)
+      setBackToList(false);
     }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [backToList])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [backToList]);
 
   const handleMapZoom = (e: MapEvent) => {
     setMapZoom(e.target.getZoom());
@@ -135,7 +135,9 @@ export function MapDisplay() {
         popupContent.appendChild(description);
 
         // Add button if exist for fun
-        const bureau = filteredPois.find((p) => p.name === "Wemap Montpellier");
+        const bureau = filteredPois.find(
+          (p) => p.name === "Wemap Montpellier" || p.name === "Wemap Paris"
+        );
         if (bureau && poi.name === "Thiefaine") {
           const routeData = await getRoute(
             {
@@ -162,13 +164,11 @@ export function MapDisplay() {
         }
 
         if (poi.name !== "Thiefaine" && selectedPoi !== poi) {
-
           const button = document.createElement("button");
           button.textContent = "Voir les informations";
           button.className = "bg-blue-500 text-white px-3 py-1 rounded mt-2";
 
           button.addEventListener("click", () => {
-
             setSelectedPoi(poi);
           });
           popupContent.appendChild(button);

@@ -6,14 +6,15 @@ import { Footprints, Trash2 } from "lucide-react";
 import { useShallow } from "zustand/shallow";
 
 export function Header() {
-  const { setRoute, poisData, setMapCoordinates, route } = useGeneralSelectorStore(
-    useShallow((state) => ({
-      setRoute: state.setRoute,
-      poisData: state.poisData,
-      setMapCoordinates: state.setMapCoordinates,
-      route: state.route,
-    }))
-  );
+  const { setRoute, poisData, setMapCoordinates, route } =
+    useGeneralSelectorStore(
+      useShallow((state) => ({
+        setRoute: state.setRoute,
+        poisData: state.poisData,
+        setMapCoordinates: state.setMapCoordinates,
+        route: state.route,
+      }))
+    );
 
   const fetchRoute = async (
     a: {
@@ -24,7 +25,7 @@ export function Header() {
   ) => {
     const data = await getRoute(a, b);
 
-    if ( data.coordinates.length > 0) {
+    if (data.coordinates.length > 0) {
       setRoute(data);
       setMapCoordinates([a.longitude, a.latitude]);
     }
@@ -48,7 +49,7 @@ export function Header() {
   };
 
   return (
-    <header className="border-b bg-white px-2 fixed top-0 z-10 w-full h-[64px]"> 
+    <header className="border-b bg-white px-2 fixed top-0 z-10 w-full h-[64px]">
       <div className="flex h-full items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
@@ -57,20 +58,28 @@ export function Header() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {route.coordinates.length > 0 &&
-          (
-            <Button variant="destructive" size="sm" onClick={() => setRoute({
-              type: "LineString",
-              coordinates: []
-            },)}>
+          {route.coordinates.length > 0 && (
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() =>
+                setRoute({
+                  type: "LineString",
+                  coordinates: [],
+                })
+              }
+            >
               <Trash2 /> Supprimer
             </Button>
-          )
-          }
-          <Button size="sm" disabled={route.coordinates.length !== 0 } onClick={() => handleGoToTHeOffice()}>
-            <Footprints />Itineraire bureau
+          )}
+          <Button
+            size="sm"
+            disabled={route.coordinates.length !== 0}
+            onClick={() => handleGoToTHeOffice()}
+          >
+            <Footprints />
+            Itineraire bureau
           </Button>
-
         </div>
       </div>
     </header>

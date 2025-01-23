@@ -86,8 +86,10 @@ export function Sidebar() {
   }, [debouncedValue, setSearchQuery]);
 
   useEffect(() => {
+    if(debouncedValue.length !== 0) {
       searchInputRef?.current?.focus();
-  }, [filteredPois]);
+    }
+  }, [debouncedValue.length, filteredPois]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
