@@ -42,7 +42,7 @@ export type GeneralStoreActions = {
 
 export type GeneralStore = GeneralStoreState & GeneralStoreActions;
 
-export const defaultInitState: GeneralStore = {
+export const defaultInitState: GeneralStoreState = {
   poisData: [],
   isLoading: false,
   error: null,
@@ -67,22 +67,6 @@ export const defaultInitState: GeneralStore = {
   currentPage: 1,
   totalPages: 1,
   numberBasePois: 0,
-  setIsLoading: () => null,
-  setError: () => null,
-  setSearchQuery: () => null,
-  setMapIsOpen: () => null,
-  setMapZoom: () => null,
-  setMapCoordinates: () => {},
-  setPoisData: () => null,
-  setSelectedPoi: () => null,
-  setOptionZoom: () => null,
-  setRoute: () => null,
-  setWeMapData: () => null,
-  setFilteredPois: () => null,
-  setBackToList: () => null,
-  setCurrentPage: () => null,
-  setTotalPages: () => null,
-  setNumberBasePois: () => null,
 };
 
 export const useGeneralSelectorStore = create<GeneralStore>((set) => ({
